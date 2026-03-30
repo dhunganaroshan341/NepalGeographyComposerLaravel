@@ -1,0 +1,37 @@
+{
+  "name": "roshan-dhungana/nepal-geography",
+  "description": "Reusable Nepal provinces, districts and municipalities dataset for Laravel",
+  "type": "library",
+  "license": "MIT",
+
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^12.0",
+    "illuminate/database": "^12.0",
+    "illuminate/console": "^12.0"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "RoshanDhungana\\NepalGeography\\": "src/"
+    }
+  },
+
+  "extra": {
+    "laravel": {
+      "providers": [
+         "RoshanDhungana\\NepalGeography\\NepalGeographyServiceProvider"
+      ]
+    }
+  },
+
+  "authors": [
+    {
+      "name": "Roshan Dhungana",
+      "email": "dhunganaroshan341@gmail.com"
+    }
+  ],
+
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
