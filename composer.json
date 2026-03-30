@@ -4,6 +4,23 @@
   "type": "library",
   "license": "MIT",
 
+  "keywords": [
+    "laravel",
+    "nepal",
+    "geography",
+    "provinces",
+    "districts",
+    "municipalities",
+    "wards"
+  ],
+
+  "homepage": "https://github.com/dhunganaroshan341/NepalGeographyComposerLaravel",
+
+  "support": {
+    "issues": "https://github.com/dhunganaroshan341/NepalGeographyComposerLaravel/issues",
+    "source": "https://github.com/dhunganaroshan341/NepalGeographyComposerLaravel"
+  },
+
   "require": {
     "php": "^8.2",
     "illuminate/support": "^10.0|^11.0|^12.0"
