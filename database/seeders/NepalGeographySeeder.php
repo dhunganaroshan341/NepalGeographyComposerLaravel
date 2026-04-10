@@ -14,7 +14,7 @@ class NepalGeographySeeder extends Seeder
         if (!File::exists($basePath)) {
             throw new \Exception('Nepal geography data not found. Run vendor:publish first.');
         }
-
+// path fixed
         $provinces = json_decode(File::get($basePath . '/provinces.json'), true);
         $districts = json_decode(File::get($basePath . '/districts.json'), true);
         $types     = json_decode(File::get($basePath . '/local_level_type.json'), true);
