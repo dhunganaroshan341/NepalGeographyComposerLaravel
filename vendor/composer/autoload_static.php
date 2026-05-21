@@ -38,6 +38,7 @@ class ComposerStaticInitc9050134575e666b80f27fad66086e07
         ),
         'R' =>
         array (
+            'RoshanDhungana\\NepalGeography\\Seeders\\' => 38,
             'RoshanDhungana\\NepalGeography\\' => 30,
         ),
         'P' =>
@@ -94,6 +95,10 @@ class ComposerStaticInitc9050134575e666b80f27fad66086e07
         'Symfony\\Component\\Clock\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/clock',
+        ),
+        'RoshanDhungana\\NepalGeography\\Seeders\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/database/seeders',
         ),
         'RoshanDhungana\\NepalGeography\\' =>
         array (
