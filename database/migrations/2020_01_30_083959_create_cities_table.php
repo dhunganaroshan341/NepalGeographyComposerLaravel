@@ -41,7 +41,7 @@ return new class extends Migration {
 
             $table->foreign('municipality_id')
                 ->references('id')
-                ->on('vdc_municipalities')
+                ->on('municalities')
                 ->cascadeOnDelete();
         });
     }

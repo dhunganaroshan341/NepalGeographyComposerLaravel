@@ -30,7 +30,7 @@ return new class extends Migration {
             // Foreign key
             $table->foreign('municipality_id')
                 ->references('id')
-                ->on('vdc_municipalities')
+                ->on('municalities')
                 ->onDelete('cascade');
         });
     }
