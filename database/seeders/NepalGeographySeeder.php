@@ -9,17 +9,16 @@ class NepalGeographySeeder extends Seeder
 {
     public function run(): void
     {
-        $basePath = storage_path('app/nepal-geography');
+         $basePath = __DIR__ . '/../database/data';
 
-        if (!File::exists($basePath)) {
-            throw new \Exception('Nepal geography data not found. Run vendor:publish first.');
-        }
-// butg fixes
-        $provinces = json_decode(File::get($basePath . '/provinces.json'), true);
-        $districts = json_decode(File::get($basePath . '/districts.json'), true);
-        $types     = json_decode(File::get($basePath . '/local_level_type.json'), true);
-        $locals    = json_decode(File::get($basePath . '/local_levels.json'), true);
+    if (!file_exists($basePath)) {
+        throw new \Exception('Nepal geography package data missing.');
+    }
 
+    $provinces = json_decode(file_get_contents($basePath.'/provinces.json'), true);
+    $districts = json_decode(file_get_contents($basePath.'/districts.json'), true);
+    $types     = json_decode(file_get_contents($basePath.'/local_level_type.json'), true);
+    $locals    = json_decode(file_get_contents($basePath.'/local_levels.json'), true);
         $typeMap = [];
         foreach ($types as $t) {
             $typeMap[$t['local_level_type_id']] = [
