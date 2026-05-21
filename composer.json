@@ -28,7 +28,8 @@
 
   "autoload": {
     "psr-4": {
-      "RoshanDhungana\\NepalGeography\\": "src/"
+      "RoshanDhungana\\NepalGeography\\": "src/",
+    "RoshanDhungana\\NepalGeography\\Seeders\\": "database/seeders/"
     }
   },
 
