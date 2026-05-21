@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('state_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('nepali_name')->nullable();
-
+// 
             $table->timestamps();
         });
     }
