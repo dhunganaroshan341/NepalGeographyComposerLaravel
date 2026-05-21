@@ -1,4 +1,5 @@
 <?php
+
 namespace RoshanDhungana\NepalGeography\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -9,16 +10,22 @@ class NepalGeographySeeder extends Seeder
 {
     public function run(): void
     {
-         $basePath = __DIR__ . '/../database/data';
+        // Published data path (IMPORTANT: not package __DIR__)
+        $basePath = storage_path('app/nepal-geography');
 
-    if (!file_exists($basePath)) {
-        throw new \Exception('Nepal geography package data missing.');
-    }
+        if (!File::exists($basePath)) {
+            throw new \Exception(
+                'Nepal geography data missing. Run: php artisan vendor:publish --tag=nepal-geography-data'
+            );
+        }
 
-    $provinces = json_decode(file_get_contents($basePath.'/provinces.json'), true);
-    $districts = json_decode(file_get_contents($basePath.'/districts.json'), true);
-    $types     = json_decode(file_get_contents($basePath.'/local_level_type.json'), true);
-    $locals    = json_decode(file_get_contents($basePath.'/local_levels.json'), true);
+        // Load JSON files safely
+        $provinces = json_decode(File::get($basePath . '/provinces.json'), true);
+        $districts = json_decode(File::get($basePath . '/districts.json'), true);
+        $types     = json_decode(File::get($basePath . '/local_level_type.json'), true);
+        $locals    = json_decode(File::get($basePath . '/local_levels.json'), true);
+
+        // Map local level types
         $typeMap = [];
         foreach ($types as $t) {
             $typeMap[$t['local_level_type_id']] = [
@@ -27,13 +34,13 @@ class NepalGeographySeeder extends Seeder
             ];
         }
 
-        // Clear data safely
+        // Clear existing data safely
         DB::table('vdc_municipalities')->delete();
         DB::table('districts')->delete();
         DB::table('states')->delete();
         DB::table('countries')->delete();
 
-        // Insert country
+        // Insert country (Nepal)
         $nepalId = DB::table('countries')->insertGetId([
             'name' => 'Nepal',
             'iso2' => 'NP',
@@ -42,7 +49,7 @@ class NepalGeographySeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // Provinces
+        // Insert provinces (states)
         foreach ($provinces as $p) {
             DB::table('states')->insert([
                 'id' => $p['province_id'],
@@ -54,7 +61,7 @@ class NepalGeographySeeder extends Seeder
             ]);
         }
 
-        // Districts
+        // Insert districts
         foreach ($districts as $d) {
             DB::table('districts')->insert([
                 'id' => $d['district_id'],
@@ -66,7 +73,7 @@ class NepalGeographySeeder extends Seeder
             ]);
         }
 
-        // Local levels
+        // Insert municipalities / local levels
         foreach ($locals as $m) {
             $type = $typeMap[$m['local_level_type_id']] ?? null;
 
