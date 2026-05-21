@@ -30,7 +30,7 @@ class NepalInstallCommand extends Command
     $this->info('Publishing data files...');
     Artisan::call('vendor:publish', [
         '--provider' => NepalGeographyServiceProvider::class,
-        '--tag' => 'nepal-data',
+        '--tag' => 'nepal-geography-data',
         '--force' => true,
     ]);
     $this->line(Artisan::output());
