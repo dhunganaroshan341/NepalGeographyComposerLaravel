@@ -35,7 +35,7 @@ class NepalGeographySeeder extends Seeder
         }
 
         // Clear existing data safely
-        DB::table('vdc_municipalities')->delete();
+        DB::table('municipalities')->delete();
         DB::table('districts')->delete();
         DB::table('states')->delete();
         DB::table('countries')->delete();
@@ -77,7 +77,7 @@ class NepalGeographySeeder extends Seeder
         foreach ($locals as $m) {
             $type = $typeMap[$m['local_level_type_id']] ?? null;
 
-            DB::table('vdc_municipalities')->insert([
+            DB::table('municipalities')->insert([
                 'id' => $m['municipality_id'],
                 'district_id' => $m['district_id'],
                 'name' => $m['name'],
