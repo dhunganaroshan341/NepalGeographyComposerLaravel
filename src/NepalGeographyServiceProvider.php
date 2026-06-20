@@ -1,4 +1,5 @@
 <?php
+
 namespace RoshanDhungana\NepalGeography;
 
 use Illuminate\Support\ServiceProvider;
@@ -6,7 +7,10 @@ use RoshanDhungana\NepalGeography\Commands\NepalInstallCommand;
 
 class NepalGeographyServiceProvider extends ServiceProvider
 {
-    public function register()
+    /**
+     * Register package services.
+     */
+    public function register(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -15,18 +19,36 @@ class NepalGeographyServiceProvider extends ServiceProvider
         }
     }
 
-    public function boot()
+    /**
+     * Bootstrap package services.
+     */
+    public function boot(): void
     {
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations'),
-        ], 'nepal-geography-migrations');
+        /*
+        |--------------------------------------------------------------------------
+        | Load Package Migrations
+        |--------------------------------------------------------------------------
+        |
+        | Laravel will automatically discover and run these migrations.
+        |
+        */
+
+        $this->loadMigrationsFrom(
+            __DIR__ . '/../database/migrations'
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Publish Geography Dataset
+        |--------------------------------------------------------------------------
+        |
+        | Copies JSON files into:
+        | storage/app/nepal-geography
+        |
+        */
 
         $this->publishes([
-            __DIR__.'/../database/seeders/' => database_path('seeders'),
-        ], 'nepal-geography-seeders');
-
-        $this->publishes([
-            __DIR__.'/../database/data/' => storage_path('app/nepal-geography'),
+            __DIR__ . '/../database/data' => storage_path('app/nepal-geography'),
         ], 'nepal-geography-data');
     }
 }
