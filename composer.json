@@ -3,7 +3,6 @@
   "description": "Reusable Nepal provinces, districts and municipalities dataset for Laravel",
   "type": "library",
   "license": "MIT",
-
   "keywords": [
     "laravel",
     "nepal",
@@ -13,26 +12,22 @@
     "municipalities",
     "wards"
   ],
-
   "homepage": "https://github.com/dhunganaroshan341/NepalGeographyComposerLaravel",
-
   "support": {
     "issues": "https://github.com/dhunganaroshan341/NepalGeographyComposerLaravel/issues",
     "source": "https://github.com/dhunganaroshan341/NepalGeographyComposerLaravel"
   },
-
   "require": {
     "php": "^8.2",
     "illuminate/support": "^10.0|^11.0|^12.0"
   },
-
   "autoload": {
     "psr-4": {
       "RoshanDhungana\\NepalGeography\\": "src/",
-    "RoshanDhungana\\NepalGeography\\Seeders\\": "database/seeders/"
+      "RoshanDhungana\\NepalGeography\\Models\\": "Models/",
+      "RoshanDhungana\\NepalGeography\\Seeders\\": "database/seeders/"
     }
   },
-
   "extra": {
     "laravel": {
       "providers": [
@@ -40,14 +35,12 @@
       ]
     }
   },
-
   "authors": [
     {
       "name": "Roshan Dhungana",
       "email": "dhunganaroshan341@gmail.com"
     }
   ],
-
   "minimum-stability": "stable",
   "prefer-stable": true
 }
