@@ -15,6 +15,7 @@ return array(
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Symfony\\Component\\Clock\\' => array($vendorDir . '/symfony/clock'),
     'RoshanDhungana\\NepalGeography\\Seeders\\' => array($baseDir . '/database/seeders'),
+    'RoshanDhungana\\NepalGeography\\Models\\' => array($baseDir . '/Models'),
     'RoshanDhungana\\NepalGeography\\' => array($baseDir . '/src'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
