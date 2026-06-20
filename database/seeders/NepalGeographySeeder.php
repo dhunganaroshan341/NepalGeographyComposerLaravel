@@ -9,35 +9,101 @@ use Illuminate\Support\Facades\Schema;
 
 class NepalGeographySeeder extends Seeder
 {
-   public function run(): void
-{
-$requiredTables = [
-'countries',
-'states',
-'districts',
-'municipalities',
-];
+    public function run(): void
+    {
+        $requiredTables = [
+            'countries',
+            'states',
+            'districts',
+            'municipalities',
+        ];
 
-```
-foreach ($requiredTables as $table) {
-    if (! Schema::hasTable($table)) {
-        throw new \RuntimeException(
-            "Required table [{$table}] not found. Please run migrations first."
-        );
+        foreach ($requiredTables as $table) {
+            if (! Schema::hasTable($table)) {
+                throw new \RuntimeException(
+                    "Required table [{$table}] not found. Please run migrations first."
+                );
+            }
+        }
+
+        $basePath = storage_path('app/nepal-geography');
+
+        if (! File::exists($basePath)) {
+            throw new \RuntimeException(
+                'Nepal geography data missing. Run: php artisan vendor:publish --tag=nepal-geography-data'
+            );
+        }
+
+        // Load JSON files
+        $provinces = json_decode(File::get($basePath . '/provinces.json'), true);
+        $districts = json_decode(File::get($basePath . '/districts.json'), true);
+        $types     = json_decode(File::get($basePath . '/local_level_type.json'), true);
+        $locals    = json_decode(File::get($basePath . '/local_levels.json'), true);
+
+        // Map local level types
+        $typeMap = [];
+
+        foreach ($types as $t) {
+            $typeMap[$t['local_level_type_id']] = [
+                'name' => $t['name'],
+                'nepali_name' => $t['nepali_name'] ?? null,
+            ];
+        }
+
+        // Clear existing data
+        DB::table('municipalities')->delete();
+        DB::table('districts')->delete();
+        DB::table('states')->delete();
+        DB::table('countries')->delete();
+
+        // Country
+        $nepalId = DB::table('countries')->insertGetId([
+            'name' => 'Nepal',
+            'iso2' => 'NP',
+            'iso3' => 'NPL',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Provinces
+        foreach ($provinces as $p) {
+            DB::table('states')->insert([
+                'id' => $p['province_id'],
+                'country_id' => $nepalId,
+                'name' => $p['name'],
+                'nepali_name' => $p['nepali_name'] ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        // Districts
+        foreach ($districts as $d) {
+            DB::table('districts')->insert([
+                'id' => $d['district_id'],
+                'state_id' => $d['province_id'],
+                'name' => $d['name'],
+                'nepali_name' => $d['nepali_name'] ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        // Municipalities
+        foreach ($locals as $m) {
+            $type = $typeMap[$m['local_level_type_id']] ?? null;
+
+            DB::table('municipalities')->insert([
+                'id' => $m['municipality_id'],
+                'district_id' => $m['district_id'],
+                'name' => $m['name'],
+                'nepali_name' => $m['nepali_name'] ?? null,
+                'local_level_type' => $type['name'] ?? null,
+                'local_level_nepali' => $type['nepali_name'] ?? null,
+                'total_wards' => $m['wards'] ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
-}
-
-$basePath = storage_path('app/nepal-geography');
-
-if (! File::exists($basePath)) {
-    throw new \RuntimeException(
-        'Nepal geography data missing. Run: php artisan vendor:publish --tag=nepal-geography-data'
-    );
-}
-
-// Rest of your seeder...
-```
-
-}
-
 }
